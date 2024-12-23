@@ -3,13 +3,17 @@ const mongoose = require("mongoose");
 const userSchema = mongoose.Schema({
   userName: {
     type: String,
-    require: true,
+    required: true,
     unique: true,
+    trim: true,
   },
   email: {
     type: String,
-    require: true,
+    required: true,
     unique: true,
+    match: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+    trim: true,
+    lowercase: true,
   },
   password: {
     type: String,
@@ -17,7 +21,7 @@ const userSchema = mongoose.Schema({
   },
   role: {
     type: String,
-    role: "user",
+    default: "user",
   },
 });
 
