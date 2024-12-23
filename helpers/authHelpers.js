@@ -13,8 +13,8 @@ const hashPassword = async (password) => {
   return hashedPassword;
 };
 
-const comparePassword = async (plainPassword, hashdPassword) => {
-  const isMatch = bcrypt.compare(plainPassword, comparedPassword);
+const comparePassword = async (plainPassword, hashedPassword) => {
+  const isMatch = await bcrypt.compare(plainPassword, hashedPassword);
   return isMatch;
 };
 
