@@ -1,0 +1,2 @@
+DB_URI=mongodb+srv://bobuj80:R4nKf7a6JpyWAk3p@asif.txswn.mongodb.net/
+PORT=4000
