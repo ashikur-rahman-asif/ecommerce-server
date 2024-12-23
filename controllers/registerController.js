@@ -1,4 +1,3 @@
-const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const { checkIfUserExists, hashPassword } = require("../helpers/authHelpers");

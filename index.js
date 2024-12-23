@@ -1,6 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const { register } = require("./controllers/registerController");
+const cors = require("cors");
+
+const authRoutes = require("./routes/authRoute");
+
 require("dotenv").config();
 
 const app = express();
@@ -21,9 +24,8 @@ app.get("/", (req, res) => {
   res.send("Hello server");
 });
 
-
-// route 
-app.use("/api/register",register)
+// route
+app.use("/api/auth", authRoutes);
 
 // Start the Server
 const PORT = process.env.PORT || 3000;
