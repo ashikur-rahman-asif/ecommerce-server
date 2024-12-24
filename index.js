@@ -3,16 +3,18 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const authRoutes = require("./routes/authRoute");
+const loginRoute = require("./routes/loginRoute");
 
 require("dotenv").config();
 
 const app = express();
 app.use(express.json());
-app.use(cors({
-  origin: "http://localhost:5173", 
-  credentials: true,              
-}));
-
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 // database connection with mongoose
 const dbURL = process.env.DB_URI;
@@ -30,6 +32,7 @@ app.get("/", (req, res) => {
 
 // route
 app.use("/api/auth", authRoutes);
+app.use("/api/auth", loginRoute);
 
 // Start the Server
 const PORT = process.env.PORT || 3000;
