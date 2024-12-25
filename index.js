@@ -1,13 +1,17 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 const authRoutes = require("./routes/authRoute");
 const loginRoute = require("./routes/loginRoute");
+const logoutRoute = require("./routes/logoutRoute");
+const checkAuth = require("./routes/checkAuth");
 
 require("dotenv").config();
 
 const app = express();
+app.use(cookieParser());
 app.use(express.json());
 app.use(
   cors({
@@ -33,6 +37,8 @@ app.get("/", (req, res) => {
 // route
 app.use("/api/auth", authRoutes);
 app.use("/api/auth", loginRoute);
+app.use("/api/auth", logoutRoute);
+app.use("/api/auth", checkAuth);
 
 // Start the Server
 const PORT = process.env.PORT || 3000;
