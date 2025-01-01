@@ -7,6 +7,7 @@ const authRoutes = require("./routes/authRoute");
 const loginRoute = require("./routes/loginRoute");
 const logoutRoute = require("./routes/logoutRoute");
 const checkAuth = require("./routes/checkAuth");
+const adminProductUpload = require("./routes/admin/products-routes");
 
 require("dotenv").config();
 
@@ -39,6 +40,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/auth", loginRoute);
 app.use("/api/auth", logoutRoute);
 app.use("/api/auth", checkAuth);
+
+//  admin route
+app.use("/api/admin/products", adminProductUpload);
 
 // Start the Server
 const PORT = process.env.PORT || 3000;
