@@ -9,30 +9,16 @@ cloudinary.config({
   api_secret: process.env.C_API_SECRET,
 });
 
-// Multer configuration (memory storage for direct upload to Cloudinary)
-const storage = multer.memoryStorage();
-const upload = multer({ storage }); // Middleware for handling file uploads
+const storage = new multer.memoryStorage();
 
-// Function to handle image upload to Cloudinary
-const imageUploadUtils = async (fileBuffer) => {
-  try {
-    const result = await cloudinary.uploader
-      .upload_stream(
-        {
-          resource_type: "auto", // Automatically detects file type
-        },
-        (error, result) => {
-          if (error) throw new Error(error.message);
-          return result;
-        }
-      )
-      .end(fileBuffer);
+async function imageUploadUtil(file) {
+  const result = await cloudinary.uploader.upload(file, {
+    resource_type: "auto",
+  });
 
-    return result;
-  } catch (error) {
-    console.error("Cloudinary Upload Error:", error);
-    throw error;
-  }
-};
+  return result;
+}
 
-module.exports = { upload, imageUploadUtils };
+const upload = multer({ storage });
+
+module.exports = { upload, imageUploadUtil };

@@ -1,27 +1,21 @@
+const { imageUploadUtil } = require("../../helpers/cloundinary");
+
 const handleImageUpload = async (req, res) => {
   try {
-    // Ensure a file is present in the request
-    if (!req.file) {
-      return res.status(400).json({
-        success: false,
-        message: "No file uploaded.",
-      });
-    }
-    // Call the utility function to upload the file to Cloudinary
-    const uploadResult = await imageUploadUtils(req.file.buffer);
+    const b64 = Buffer.from(req.file.buffer).toString("base64");
+    const url = "data:" + req.file.mimetype + ";base64," + b64;
+    const result = await imageUploadUtil(url);
+    console.log(result);
 
-    // Respond with success and the Cloudinary result
     res.json({
       success: true,
-      message: "Image uploaded successfully.",
-      data: uploadResult,
+      result,
     });
   } catch (error) {
     console.log(error);
     res.json({
       success: false,
-      message: "Image upload failed.",
-      error: error.message,
+      message: "Error occured",
     });
   }
 };
