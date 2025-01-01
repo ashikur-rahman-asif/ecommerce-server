@@ -14,7 +14,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage }); // Middleware for handling file uploads
 
 // Function to handle image upload to Cloudinary
-const handleImageUpload = async (fileBuffer) => {
+const imageUploadUtils = async (fileBuffer) => {
   try {
     const result = await cloudinary.uploader
       .upload_stream(
@@ -35,4 +35,4 @@ const handleImageUpload = async (fileBuffer) => {
   }
 };
 
-module.exports = { upload, handleImageUpload };
+module.exports = { upload, imageUploadUtils };
