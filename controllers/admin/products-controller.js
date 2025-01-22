@@ -75,17 +75,27 @@ const addProduct = async (req, res) => {
   }
 };
 
-// fetch all product
+// Fetch all products
 const fetchAllProducts = async (req, res) => {
   try {
-    const getProduct = Product.find({});
-    res.status(200).json({
+    // Await the result of the find operation
+    const getProduct = await Product.find({});
+
+    if (getProduct.length === 0) {
+      return res.status(200).json({
+        success: true,
+        message: "No products found!",
+        data: [],
+      });
+    }
+
+    return res.status(200).json({
       success: true,
       data: getProduct,
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({
+    console.error("Error fetching products:", error);
+    return res.status(500).json({
       success: false,
       message: "Internal Server Error",
     });
