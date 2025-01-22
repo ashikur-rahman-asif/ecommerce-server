@@ -4,7 +4,7 @@ const { checkIfUserExists, hashPassword } = require("../helpers/authHelpers");
 
 const register = async (req, res, next) => {
   const { userName, email, password } = req.body;
-  console.log("Request Body:", req.body); 
+  console.log("Request Body:", req.body);
 
   try {
     // Validate input
