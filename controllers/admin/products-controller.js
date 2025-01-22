@@ -95,6 +95,36 @@ const fetchAllProducts = async (req, res) => {
 // update a product
 const updateProduct = async (req, res) => {
   try {
+    const { id } = req.params;
+    const { image, title, description, category, band, salePrice, totalStock } =
+      req.body;
+
+    const findProductById = await Product.findById(id);
+
+    if (!findProductById) {
+      return res.status(400).json({
+        success: false,
+        message: "Product not found!!!!",
+      });
+    }
+
+    // Update product fields
+    findProductById.image = image || findProductById.image;
+    findProductById.title = title || findProductById.title;
+    findProductById.description = description || findProductById.description;
+    findProductById.category = category || findProductById.category;
+    findProductById.band = band || findProductById.band;
+    findProductById.salePrice = salePrice || findProductById.salePrice;
+    findProductById.totalStock = totalStock || findProductById.totalStock;
+
+    // Save updated product
+    await findProductById.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Product updated successfully!",
+      data: findProductById,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({
