@@ -100,6 +100,7 @@ const updateProduct = async (req, res) => {
       req.body;
 
     const findProductById = await Product.findById(id);
+    console.log(findProductById);
 
     if (!findProductById) {
       return res.status(400).json({
@@ -134,11 +135,32 @@ const updateProduct = async (req, res) => {
   }
 };
 
-// delete a product
+// Delete a product
 const deleteProduct = async (req, res) => {
   try {
+    const { id } = req.params;
+
+    // Find and delete the product by ID
+    const product = await Product.findByIdAndDelete(id);
+
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found!",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Product deleted successfully!",
+      data: product,
+    });
   } catch (error) {
-    console.log(error);
+    console.error("Error deleting product:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
   }
 };
 
