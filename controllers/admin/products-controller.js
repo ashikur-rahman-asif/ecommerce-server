@@ -29,48 +29,43 @@ const handleImageUpload = async (req, res) => {
 
 // add a product
 const addProduct = async (req, res) => {
-  const { image, title, description, category, band, salePrice, totalStock } =
-    req.body;
-  console.log(req.body);
-
   try {
-    // validate the inputs
-    if (
-      !image ||
-      !title ||
-      !description ||
-      !category ||
-      !band ||
-      !salePrice ||
-      !totalStock
-    ) {
-      return res.status(400).json({
-        success: false,
-        message: "All fields are required",
-      });
-    }
-
-    const newProduct = new Product({
+    const {
       image,
       title,
       description,
       category,
-      band,
+      brand,
+      price,
       salePrice,
       totalStock,
+      averageReview,
+    } = req.body;
+
+    console.log(averageReview, "averageReview");
+
+    const newlyCreatedProduct = new Product({
+      image,
+      title,
+      description,
+      category,
+      brand,
+      price,
+      salePrice,
+      totalStock,
+      averageReview,
     });
 
-    const savedProduct = await newProduct.save();
+    await newlyCreatedProduct.save();
     res.status(201).json({
       success: true,
-      message: "Product added successfully",
-      data: savedProduct,
+      data: newlyCreatedProduct,
     });
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    console.log(e);
     res.status(500).json({
       success: false,
-      message: "Internal Server Error",
+      message: "Error occured",
     });
   }
 };
