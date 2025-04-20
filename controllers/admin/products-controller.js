@@ -91,45 +91,49 @@ const fetchAllProducts = async (req, res) => {
 const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { image, title, description, category, band, salePrice, totalStock } =
-      req.body;
+    const {
+      image,
+      title,
+      description,
+      category,
+      brand,
+      price,
+      salePrice,
+      totalStock,
+      averageReview,
+    } = req.body;
 
-    const findProductById = await Product.findById(id);
-    console.log(findProductById);
-
-    if (!findProductById) {
-      return res.status(400).json({
+    let findProduct = await Product.findById(id);
+    if (!findProduct)
+      return res.status(404).json({
         success: false,
-        message: "Product not found!!!!",
+        message: "Product not found",
       });
-    }
 
-    // Update product fields
-    findProductById.image = image || findProductById.image;
-    findProductById.title = title || findProductById.title;
-    findProductById.description = description || findProductById.description;
-    findProductById.category = category || findProductById.category;
-    findProductById.band = band || findProductById.band;
-    findProductById.salePrice = salePrice || findProductById.salePrice;
-    findProductById.totalStock = totalStock || findProductById.totalStock;
+    findProduct.title = title || findProduct.title;
+    findProduct.description = description || findProduct.description;
+    findProduct.category = category || findProduct.category;
+    findProduct.brand = brand || findProduct.brand;
+    findProduct.price = price === "" ? 0 : price || findProduct.price;
+    findProduct.salePrice =
+      salePrice === "" ? 0 : salePrice || findProduct.salePrice;
+    findProduct.totalStock = totalStock || findProduct.totalStock;
+    findProduct.image = image || findProduct.image;
+    findProduct.averageReview = averageReview || findProduct.averageReview;
 
-    // Save updated product
-    await findProductById.save();
-
-    return res.status(200).json({
+    await findProduct.save();
+    res.status(200).json({
       success: true,
-      message: "Product updated successfully!",
-      data: findProductById,
+      data: findProduct,
     });
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    console.log(e);
     res.status(500).json({
       success: false,
-      message: "Internal Server Error",
+      message: "Error occured",
     });
   }
 };
-
 // Delete a product
 const deleteProduct = async (req, res) => {
   try {
