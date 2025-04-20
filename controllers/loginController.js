@@ -4,7 +4,7 @@ const { comparePassword } = require("../helpers/authHelpers");
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
-  console.log("login",req.body)
+  console.log("login", req.body);
   try {
     const user = await User.findOne({ email });
     if (!user) {
@@ -26,6 +26,7 @@ const login = async (req, res, next) => {
         id: user._id,
         role: user.role,
         email: user.email,
+        userName: user.userName,
       },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
@@ -38,6 +39,7 @@ const login = async (req, res, next) => {
         email: user.email,
         role: user.role,
         id: user._id,
+        userName: user.userName,
       },
     });
   } catch (error) {
