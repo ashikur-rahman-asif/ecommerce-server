@@ -9,6 +9,8 @@ const logoutRoute = require("./routes/logoutRoute");
 const checkAuth = require("./routes/checkAuth");
 const adminProductUpload = require("./routes/admin/products-routes");
 
+const shopProductsRouter = require("./routes//shop/products-route");
+
 require("dotenv").config();
 
 const app = express();
@@ -44,6 +46,7 @@ app.use("/api/auth", checkAuth);
 //  admin route
 app.use("/api/admin/products", adminProductUpload);
 
+app.use("/api/shop/products", shopProductsRouter);
 
 // Start the Server
 const PORT = process.env.PORT || 3000;
