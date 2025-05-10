@@ -9,7 +9,8 @@ const logoutRoute = require("./routes/logoutRoute");
 const checkAuth = require("./routes/checkAuth");
 const adminProductUpload = require("./routes/admin/products-routes");
 
-const shopProductsRouter = require("./routes//shop/products-route");
+const shopProductsRouter = require("./routes/shop/products-route");
+const shopCartRouter = require("./routes/shop/cart-routes");
 
 require("dotenv").config();
 
@@ -47,6 +48,7 @@ app.use("/api/auth", checkAuth);
 app.use("/api/admin/products", adminProductUpload);
 
 app.use("/api/shop/products", shopProductsRouter);
+app.use("/api/shop/cart", shopCartRouter);
 
 // Start the Server
 const PORT = process.env.PORT || 3000;
